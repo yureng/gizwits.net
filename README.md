@@ -1,2 +1,2 @@
 # gizwits.net
-Gizwits SDK wrapper for .NET MAUI
+Gizwits SDK wrapper for .Net MAUI
