@@ -14,6 +14,8 @@ With Gizwits.Net, you can write a single codebase in .Net MAUI to implement Gizw
 To use the Gizwits.Net library, you must first register an account on the Gizwits Developer Platform, familiarize yourself with and adhere to the platform's App SDK development policies, and obtain the PRODUCT_KEY, PRODUCT_SECRET, APP_ID, and APP_SECRET required for your product.
 As the Gizwits.Net library is designed for developers creating end-user apps, you may also need a Gizwits user account for the end devices.
 
+You need to refer to the Gizwits SDK development documentation to modify the `AndroidManifest.xml` file for Android projects and the `Info.plist` file for iOS projects; this involves declaring the necessary Wi-Fi and Bluetooth permissions and requesting these permissions within the code.
+
 For more information, please visit the [Gizwits Developer Center](https://dev.gizwits.com).
 
 **Install**
