@@ -169,8 +169,8 @@ giz.UnBindDevice(id);
 
 // Get the device
 var gizdev = giz.GetGizDevice(id,
-    (data, faults, alerts, binary, sn) => {},   // 设备收到数据的回调
-    (status) => {}  // 设备状态改变回调（离线，上线...）
+    (data, faults, alerts, binary, sn) => {},   // Callback for receiving device data
+    (status) => {}  // Device status change callback (offline, online...)
     );
 
 // Subscribe to Device
