@@ -2,6 +2,10 @@
 
 **Gizwits SDK wrapper for .Net MAUI**
 
+**Read this in other languages:**
+
+[English](README.md) | [中文](README_zh.md)
+
 Gizwits.Net 是机智云([https://dev.gizwits.com](https://dev.gizwits.com)) SDK 的 .Net MAUI 封装。
 通过 Gizwits.Net ，能够写单一的 .Net MAUI 代码，实现 iOS 和 Android 平台的机智云客户端功能，与机智云设备通讯，而不必纠结于两个平台的 SDK 调用差异。
 
