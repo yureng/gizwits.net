@@ -199,6 +199,7 @@ var info = await giz.GetDeviceInfo();
 **备注和提醒**
 
 Gizwits.Net 只是包装机智云 SDK，具体函数方法和其中的参数含义，仍然需要参考机智云官方 SDK 开发文档获得解释
+
 Gizwits.Net 基于机智云官方发布的以下 SDK 版本：
 
 * GizWifiSDK-Android-2.23.23.11613
