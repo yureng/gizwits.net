@@ -12,7 +12,9 @@ Gizwits.Net 是机智云([https://dev.gizwits.com](https://dev.gizwits.com)) SDK
 **前提条件**
 
 要使用 Gizwits.Net 库，首先必需在机智云开发者平台注册账户，了解并遵循平台 App SDK 开发政策，获得授权您产品使用的 PRODUCT_KEY、PRODUCT_SECRET，以及 APP_ID、APP_SECRET；
-Gizwits.Net 库面向开发终端用户 App 的开发者，因此您也可能需要拥有终端设备的机智云用户账号。
+Gizwits.Net 库面向开发终端用户 App 的开发者，因此您也可能需要拥有终端设备的机智云用户账号；
+
+需要参照机智云 SDK 开发文档说明，为 Android 项目修改 AndroidManifest.xml 文件，为 iOS 项目修改 Info.plist 文件，声明需要 Wifi 和蓝牙的权限，并且在代码中请求授予权限。
 
 更多信息请访问 [Gizwits 机智云开发者中心](https://dev.gizwits.com)
 
@@ -198,7 +200,7 @@ var info = await giz.GetDeviceInfo();
 
 **备注和提醒**
 
-Gizwits.Net 只是包装机智云 SDK，具体函数方法和其中的参数含义，仍然需要参考机智云官方 SDK 开发文档获得解释
+Gizwits.Net 只是包装机智云 SDK，具体函数方法和其中的参数含义，仍然需要参考机智云官方 SDK 开发文档获得解释；
 
 Gizwits.Net 基于机智云官方发布的以下 SDK 版本：
 
