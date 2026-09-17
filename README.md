@@ -199,6 +199,7 @@ var info = await giz.GetDeviceInfo();
 **Notes and Reminders**
 
 Gizwits.Net This is merely a wrapper for the Gizwits SDK; for explanations regarding specific functions, methods, and parameter meanings, you still need to consult the official Gizwits SDK development documentation.
+
 Gizwits.Net Based on the following SDK versions officially released by Gizwits:
 
 * GizWifiSDK-Android-2.23.23.11613
