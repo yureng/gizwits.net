@@ -1,6 +1,6 @@
 ﻿namespace Gizwits
 {
-    public interface IWifiDeviceGenerator
+    public interface IGizDeviceGenerator
     {
         object Create(string productKey, string id, string name, string mac, string ip, string remark, bool isBind, bool isLan, bool isDisabled,
             bool? bleWork, 
@@ -24,9 +24,9 @@
     // 操作角色
     public enum Roles { Special, Owner, Guest, Normal };
 
-    public struct WifiDeviceInfo
+    public struct GizDeviceInfo
     {
-        internal WifiDeviceInfo(string firmwareId, string firmwareVersion, string wifiSoftVersion, string wifiHardVersion, string mcuSoftVersion, string mcuHardVersion)
+        internal GizDeviceInfo(string firmwareId, string firmwareVersion, string wifiSoftVersion, string wifiHardVersion, string mcuSoftVersion, string mcuHardVersion)
         {
             this.FirmwareId = firmwareId;
             this.FirmwareVersion = firmwareVersion;

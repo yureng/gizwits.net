@@ -1,35 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using Foundation;
+using Java.Util.Concurrent;
 
 namespace Gizwits;
 
-internal partial class WifiDeviceData
+internal partial class GizDeviceData
 {
     private partial object GetValue(string name, Type type)
     {
         object obj = null;
-        var dict = _source as NSDictionary;
+        var dict = _source as ConcurrentHashMap;
         if (dict != null)
         {
-            var ns = dict[name] as NSNumber;
-            if (ns != null)
+            var value = dict.Get(name);
+            if (obj == null)
             {
                 if (type == typeof(short))
-                    obj = ns.Int16Value;
+                    obj = Convert.ToInt16(value);
                 else if (type == typeof(int))
-                    obj = ns.Int32Value;
+                    obj = Convert.ToInt32(value);
                 else if (type == typeof(long))
-                    obj = ns.Int64Value;
+                    obj = Convert.ToInt64(value);
 
                 else if (type == typeof(bool))
-                    obj = ns.BoolValue;
+                    obj = Convert.ToBoolean(value);
                 else if (type == typeof(double))
-                    obj = ns.DoubleValue;
+                    obj = Convert.ToDouble(value);
                 else if (type == typeof(float))
-                    obj = ns.FloatValue;
+                    obj = Convert.ToSingle(value);
                 else if (type == typeof(string))
-                    obj = ns.StringValue;
+                    obj = Convert.ToString(value);
             }
         }
         return obj;

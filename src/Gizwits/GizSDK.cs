@@ -5,18 +5,20 @@ namespace Gizwits;
 
 public class GizSDK : GizSDKListener
 {
-    internal static ProductInfo ProductInfo = null;
-
-    Func<IWifiDeviceGenerator> _deviceGenerator = null;
+    internal readonly ProductInfo ProductInfo = null;
+    readonly Func<IGizDeviceGenerator> _deviceGenerator = null;
     Action<string, string> _messageNotify = null;
     Action<bool> _startDone = null;
-
+    
     public string UID { get; private set; }
     public string Token { get; private set; }
     public bool IsLoggedIn => (!String.IsNullOrEmpty(UID) && !String.IsNullOrEmpty(Token));
-    public bool Initialized => ProductInfo != null;
+    
     public IEnumerable<object> WifiDevices => ConvertTo(GizWifiSDK.SharedInstance().DeviceList);
     public IEnumerable<object> BleDevices => ConvertTo(GizWifiSDK.SharedInstance().BoundBleDevice);
+
+    internal bool Initialising { get => _startDone != null; }
+    public bool Initialized { get; private set; } = false;
 
     public static string Version
     {
@@ -24,7 +26,7 @@ public class GizSDK : GizSDKListener
         {
             string ver = null;
 #if ANDROID
-            ver = GizWifiSDK.SharedInstance().Version;
+            ver = GizWifiSDK.SharedInstance()?.Version;
 #elif IOS
             ver = GizWifiSDK.Version;
 #endif
@@ -32,37 +34,38 @@ public class GizSDK : GizSDKListener
         }
     }
 
-    // 初始化启动 SDK *(需保证全部的调用栈，不要在异步方法中调用此方法)
+    internal GizSDK(ProductInfo productInfo, Func<IGizDeviceGenerator> deviceGenerator)
+    {
+        ProductInfo = productInfo;
+        _deviceGenerator = deviceGenerator;
+    }
+
+    // 初始化启动 SDK *(需在主线程调用此方法)
     public void InitializeStart(
-        ProductInfo info,
-        Func<IWifiDeviceGenerator> deviceGenerator,
         Action<string, string> msgCallback,
         Action<bool> discoveCallback,
-        Action<bool> discoveBleCallback,
+        Action<bool> bleFoundCallback,
         Action tokenInvalidCallback,
         Action startedCallback = null)
     {
-        _deviceGenerator = deviceGenerator;
-
         _messageNotify = msgCallback;
         this.OnTokenInvalid = tokenInvalidCallback;
         this.OnDiscovered = discoveCallback;
-        this.OnDiscoverBleDevice = discoveBleCallback;
+        this.OnDiscoverBleDevice = bleFoundCallback;
 
         if (!Initialized && _startDone == null)
         {
             _startDone = (succeed) => 
             {
-                if (succeed)
-                    ProductInfo = info;
-
+                Initialized = succeed;
                 startedCallback?.Invoke();
             };
 
             this.OnNotifyEvent += OnNotify;
-            this.Start(info);
+            this.Start(ProductInfo);
         }
     }
+
     void OnNotify(GizEventType eventType, GizWifiErrorCode eventId)
     {
         if (eventType == GizEventType.GizEventSDK)
@@ -94,7 +97,7 @@ public class GizSDK : GizSDKListener
 
     // 获取设备实例
     public GizDevice GetGizDevice(string did,
-        Action<IWifiDeviceData, IWifiDeviceData, IWifiDeviceData, byte[], int> dataCallback,
+        Action<IGizDeviceData, IGizDeviceData, IGizDeviceData, byte[], int> dataCallback,
         Action<DevStatus> statusCallback)
     {
         var d = GizWifiSDK.SharedInstance()?.DeviceList?.FirstOrDefault(dev => { return (dev.Did == did); });

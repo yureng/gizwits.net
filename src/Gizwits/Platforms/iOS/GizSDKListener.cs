@@ -1,7 +1,6 @@
 ﻿using Com.Gizwits.Gizwifisdk.Api;
 using Com.Gizwits.Gizwifisdk.Enumration;
 using Foundation;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace Gizwits;
 

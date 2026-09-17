@@ -21,7 +21,7 @@
 		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
 
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
-		<Version>1.0.3</Version>
+		<Version>1.0.3.2</Version>
 		<Title>Gizwits SDK wrapper</Title>
 		<Description>Gizwits SDK wrapper for .NET MAUI</Description>
 		<Owners>xiaojun.zhu</Owners>
@@ -34,7 +34,7 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
-		<None Include="..\..\README.md">
+		<None Include="..\README.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
@@ -52,4 +52,14 @@
 	  </PackageReference>
 	</ItemGroup>
 
+<!--
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-ios'">
+		<ProjectReference Include="..\..\iOSBinding\GizwitsBinding.iOS.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
+		<ProjectReference Include="..\..\AndroidBinding\GizwitsBinding.Android.csproj" />
+	</ItemGroup>
+-->
+	
 </Project>

@@ -9,7 +9,7 @@ public class GizDevice : GizDeviceListener, IDisposable
     private readonly GizWifiDevice _gizDevice = null;        
 
     internal GizDevice(GizWifiDevice gizDevice, GizSDK sdk,
-        Action<IWifiDeviceData, IWifiDeviceData, IWifiDeviceData, byte[], int> dataCallback,
+        Action<IGizDeviceData, IGizDeviceData, IGizDeviceData, byte[], int> dataCallback,
         Action<DevStatus> statusCallback) : base(sdk) 
     {
         this.OnReceiveData = dataCallback;
@@ -65,7 +65,7 @@ public class GizDevice : GizDeviceListener, IDisposable
         return controlTaskSource.Task;
     }
 
-    void OnControl(IWifiDeviceData d, IWifiDeviceData f, IWifiDeviceData a, byte[] bs, int sn)
+    void OnControl(IGizDeviceData d, IGizDeviceData f, IGizDeviceData a, byte[] bs, int sn)
     {
         if (controlTaskSource == null)
         {
@@ -98,13 +98,13 @@ public class GizDevice : GizDeviceListener, IDisposable
     }
 
     // 获取硬件信息
-    WifiDeviceInfo _infoCache = new ();
-    public Task<WifiDeviceInfo> GetDeviceInfo()
+    GizDeviceInfo _infoCache = new ();
+    public Task<GizDeviceInfo> GetDeviceInfo()
     {
         if (_infoCache.FirmwareId != null && _infoCache.FirmwareVersion != null)
             return Task.FromResult(_infoCache);
 
-        var cs = new TaskCompletionSource<WifiDeviceInfo>();
+        var cs = new TaskCompletionSource<GizDeviceInfo>();
         this.OnGetHardwareInfo = (succeed, info) =>
         {
             if (cs.Task.Status != TaskStatus.RanToCompletion)

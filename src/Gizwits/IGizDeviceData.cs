@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace Gizwits
 {
-    public interface IWifiDeviceData
+    public interface IGizDeviceData
     {
         bool TryGet<T>(string name, out T value);
     }
 
-    partial class WifiDeviceData : IWifiDeviceData
+    partial class GizDeviceData : IGizDeviceData
     {
         readonly object _source;
 
-        public WifiDeviceData(object source)
+        public GizDeviceData(object source)
         {
             _source = source;
         }
 
-        bool IWifiDeviceData.TryGet<T>(string name, out T value)
+        bool IGizDeviceData.TryGet<T>(string name, out T value)
         {
             if (!String.IsNullOrEmpty(name))
             {

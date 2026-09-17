@@ -31,12 +31,12 @@ public abstract class GizDeviceListener : GizWifiDeviceDelegate
             OnSetCustomInfo(succeed);
     }
 
-    protected Action<bool, WifiDeviceInfo> OnGetHardwareInfo = null;
+    protected Action<bool, GizDeviceInfo> OnGetHardwareInfo = null;
     public override void DidGetHardwareInfo(GizWifiDevice device, NSError result, NSDictionary<NSString, NSString> hardwareInfo)
     {
         var succeed = sdk.IsSuccess(result);
         if (OnGetHardwareInfo != null)
-            OnGetHardwareInfo(succeed, new WifiDeviceInfo
+            OnGetHardwareInfo(succeed, new GizDeviceInfo
             (
                 hardwareInfo["wifiFirmwareId"]?.ToString(),
                 hardwareInfo["wifiFirmwareVer"]?.ToString(),
@@ -54,7 +54,7 @@ public abstract class GizDeviceListener : GizWifiDeviceDelegate
             OnUpdateNetStatus.Invoke(GizSDK.ConvertTo(netStatus));
     }
 
-    protected Action<IWifiDeviceData, IWifiDeviceData, IWifiDeviceData, byte[], int> OnReceiveData = null;
+    protected Action<IGizDeviceData, IGizDeviceData, IGizDeviceData, byte[], int> OnReceiveData = null;
     public override void DidReceiveAttrStatus(GizWifiDevice device, NSError result, NSDictionary attrStatus, NSDictionary adapterAttrStatus, NSNumber sn)
     {
         var succeed = sdk.IsSuccess(result);
@@ -67,25 +67,25 @@ public abstract class GizDeviceListener : GizWifiDeviceDelegate
                 {
                     //var did = device.Did;
 
-                    WifiDeviceData data = null;
+                    GizDeviceData data = null;
                     var dict = attrStatus["data"] as NSDictionary;
                     if (dict != null && dict.Count != 0)
                     {
-                        data = new WifiDeviceData(dict);
+                        data = new GizDeviceData(dict);
                     }
 
-                    WifiDeviceData faults = null;
+                    GizDeviceData faults = null;
                     dict = attrStatus["faults"] as NSDictionary;
                     if (dict != null && dict.Count != 0)
                     {
-                        faults = new WifiDeviceData(dict);
+                        faults = new GizDeviceData(dict);
                     }
 
-                    WifiDeviceData alerts = null;
+                    GizDeviceData alerts = null;
                     dict = attrStatus["alerts"] as NSDictionary;
                     if (dict != null && dict.Count != 0)
                     {
-                        alerts = new WifiDeviceData(dict); 
+                        alerts = new GizDeviceData(dict); 
                     }
 
                     byte[] binary = null;

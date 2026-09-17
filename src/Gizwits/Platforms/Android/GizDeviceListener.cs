@@ -36,14 +36,14 @@ public abstract class GizDeviceListener : GizWifiDeviceListener
             OnSetCustomInfo(succeed);
     }
 
-    protected Action<bool, WifiDeviceInfo> OnGetHardwareInfo = null;
+    protected Action<bool, GizDeviceInfo> OnGetHardwareInfo = null;
     public override void DidGetHardwareInfo(GizWifiErrorCode result, GizWifiDevice device, ConcurrentHashMap hardwareInfo)
     {
         base.DidGetHardwareInfo(result, device, hardwareInfo);
 
         var succeed = sdk.IsSuccess(result);
         if (OnGetHardwareInfo != null)
-            OnGetHardwareInfo(succeed, new WifiDeviceInfo
+            OnGetHardwareInfo(succeed, new GizDeviceInfo
             (
                 hardwareInfo.Get("wifiFirmwareId")?.ToString(),
                 hardwareInfo.Get("wifiFirmwareVer")?.ToString(),
@@ -63,7 +63,7 @@ public abstract class GizDeviceListener : GizWifiDeviceListener
             OnUpdateNetStatus.Invoke(GizSDK.ConvertTo(netStatus));
     }
 
-    protected Action<IWifiDeviceData, IWifiDeviceData, IWifiDeviceData, byte[], int> OnReceiveData = null;
+    protected Action<IGizDeviceData, IGizDeviceData, IGizDeviceData, byte[], int> OnReceiveData = null;
     public override void DidReceiveAttrStatus(GizWifiErrorCode result, GizWifiDevice device, ConcurrentHashMap attrStatus, ConcurrentHashMap adapterAttrStatus, int sn)
     {
         base.DidReceiveAttrStatus(result, device, attrStatus, adapterAttrStatus, sn);
@@ -78,22 +78,22 @@ public abstract class GizDeviceListener : GizWifiDeviceListener
                 {
                     //var did = device.Did;
 
-                    WifiDeviceData data = null;
+                    GizDeviceData data = null;
                     if (attrStatus.ContainsKey("data"))
                     {
-                        data = new WifiDeviceData(attrStatus.Get("data"));
+                        data = new GizDeviceData(attrStatus.Get("data"));
                     }
 
-                    WifiDeviceData faults = null;
+                    GizDeviceData faults = null;
                     if (attrStatus.ContainsKey("faults"))
                     {
-                        faults = new WifiDeviceData(attrStatus.Get("faults"));
+                        faults = new GizDeviceData(attrStatus.Get("faults"));
                     }
 
-                    WifiDeviceData alerts = null;
+                    GizDeviceData alerts = null;
                     if (attrStatus.ContainsKey("alerts"))
                     {
-                        alerts = new WifiDeviceData(attrStatus.Get("alerts"));
+                        alerts = new GizDeviceData(attrStatus.Get("alerts"));
                     }
 
                     byte[] binary = null;
